@@ -1,3 +1,9 @@
+.login-main {
+  height: 100vh;
+  align-items: center;
+  padding-top: 70px;
+}
+
 .login {
   width: 400px;
   background: #fff;
@@ -17,7 +23,7 @@
   font-size: 2.5rem;
   text-align: center;
   font-weight: 600;
-  color: #312c47;
+  color: #00d9ff;
 }
 
 .login > input {

@@ -1,5 +1,21 @@
- .homepage {
-  display: flex;
+.homepage-container {
+  height: 100%;
+  padding-top: 70px;
+}
+.homepage > .Header {
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  position: relative;
+}
+
+.Header > .heading {
+  font-size: 3rem;
+  font-weight: 700;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+.homepage {
+  /*   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -8,7 +24,7 @@
   border-radius: 20px;
   box-shadow: 0 0 15px 5px grey;
   background: white;
-  position: relative;
+  position: relative; */
 }
 
 .homepage > .button {
@@ -21,9 +37,4 @@
   border-radius: 8px;
   outline: none;
   cursor: pointer;
-} 
-
-
-
-
-
+}

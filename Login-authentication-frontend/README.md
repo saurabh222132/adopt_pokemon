@@ -68,3 +68,16 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+
+//Plan of the projdect 
+
+ > the plan that fist we show the list of 50 pokemons 
+ > then add a adopt button on them 
+ > when a user adopt the pokemon we store that pokemon in the database 
+ > and when user login their credential we show the data list of adopted pokemons
+ > when user adopt pokemon the 'adopt' button is disabled for that perticular pokemon
+ > and whenever user login then the adopt button is shown disabled for the already adopted pokemon 
+ 

@@ -1,11 +1,12 @@
 .App {
   display: flex;
-  overflow: hidden;
+
   width: 100%;
-  height: 100vh;
+  height: 100%;
   justify-content: center;
   align-items: center;
   background: #f0f2f5;
   font-family: Arial, sans-serif;
-  background-image: linear-gradient(to right, #2e3192, #1bffff);
+  /* background-image: linear-gradient(to right, #2e3192, #1bffff); */
+  background-color: #2e3192;
 }

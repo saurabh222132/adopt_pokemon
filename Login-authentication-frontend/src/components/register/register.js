@@ -40,49 +40,51 @@ const Register = () => {
   };
 
   return (
-    <div className="register">
-      {console.log("User", user)}
+    <div className="register-container">
+      <div className="register">
+        {console.log("User", user)}
 
-      <h1 className="reg">Register</h1>
-      <input
-        type="text"
-        name="name"
-        value={user.name}
-        placeholder="your name"
-        onChange={handleChange}
-      ></input>
-      <input
-        type="text"
-        name="email"
-        value={user.email}
-        placeholder="your Emails"
-        onChange={handleChange}
-      ></input>
-      <input
-        type="password"
-        name="password"
-        value={user.password}
-        placeholder="your password"
-        onChange={handleChange}
-      ></input>
-      <input
-        type="password"
-        name="reEnterPassword"
-        value={user.reEnterPassword}
-        placeholder="Re-enter your password"
-        onChange={handleChange}
-      ></input>
-      <div className="button" onClick={register}>
-        Register
-      </div>
-      <div>or</div>
-      <div
-        className="button"
-        onClick={() => {
-          navigate("/login");
-        }}
-      >
-        Login
+        <h1 className="reg">Register</h1>
+        <input
+          type="text"
+          name="name"
+          value={user.name}
+          placeholder="your name"
+          onChange={handleChange}
+        ></input>
+        <input
+          type="text"
+          name="email"
+          value={user.email}
+          placeholder="your Emails"
+          onChange={handleChange}
+        ></input>
+        <input
+          type="password"
+          name="password"
+          value={user.password}
+          placeholder="your password"
+          onChange={handleChange}
+        ></input>
+        <input
+          type="password"
+          name="reEnterPassword"
+          value={user.reEnterPassword}
+          placeholder="Re-enter your password"
+          onChange={handleChange}
+        ></input>
+        <div className="button" onClick={register}>
+          Register
+        </div>
+        <div>or</div>
+        <div
+          className="button"
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          Login
+        </div>
       </div>
     </div>
   );

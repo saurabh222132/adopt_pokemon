@@ -48,6 +48,7 @@ const User = new mongoose.model("User", userSchema);
 //======================= schema for storing the adopted pokemons-=======================
 
 const dataSchema = new mongoose.Schema({
+  name: String,
   email: String,
   pokemonid: String,
   health: Number,
@@ -114,30 +115,46 @@ app.post("/register", async (req, res) => {
 //==================================store the pokemon in database ================================
 
 app.post("/storedata", async (req, res) => {
-  console.log(req.body);
-
   const email = req.body.email;
   const pokemonid = req.body.id;
   const health = req.body.health;
+  const name = req.body.name;
 
-  const data = new Data({
-    email,
-    pokemonid,
-    health,
-  });
-  await data.save((err) => {
-    if (err) {
-      res.send({ message: "Something error occured" });
+  Data.findOne({ pokemonid: pokemonid }, async (err, result) => {
+    if (!result) {
+      const data = new Data({
+        name,
+        email,
+        pokemonid,
+        health,
+      });
+
+      await data.save((err) => {
+        if (err) {
+          res.send({ message: "Something error occured" });
+        } else {
+          res.send({ message: "Pokemon adopted successfully!" });
+        }
+      });
     } else {
-      res.send({ message: "Data saved successfully!" });
+      res.send({
+        message:
+          "Pokemon is already adopted by you or another user please adopt another opkemon.",
+      });
     }
   });
 });
-// fetching the stored pokemon from the database and send to the client
-// app.post("/pokemonlist", async (req, res) => {
-//   Data.find({ email: req.body.email }, async (err, result) => {
-//     res.send(result);
-//   });
+//=============fetching the stored pokemon from the database and send to the client=======
+app.post("/pokemonlist", async (req, res) => {
+  Data.find({ email: req.body.email }, async (err, result) => {
+    res.send(result);
+  });
+});
+
+//============check for individual pokemonid=======================
+// app.get("/checkpokemonid", async (req, res) => {
+//   console.log(req.body);
+//   res.send("checkpokemonid request accepted");
 // });
 
 app.listen(port, () => {

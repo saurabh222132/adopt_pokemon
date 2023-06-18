@@ -18,7 +18,7 @@ function App() {
             path="/"
             element={
               user && user._id ? (
-                <Homepage setLoginUser={setLoginUser} />
+                <Homepage user={user} setLoginUser={setLoginUser} />
               ) : (
                 <Login setLoginUser={setLoginUser} />
               )
@@ -30,10 +30,6 @@ function App() {
             {" "}
           </Route>
           <Route path="/register" element={<Register />}></Route>
-
-          {/* <Route path="/pokemons" element={<Pokemons />}>
-            {" "}
-          </Route> */}
         </Routes>
       </Router>
     </div>

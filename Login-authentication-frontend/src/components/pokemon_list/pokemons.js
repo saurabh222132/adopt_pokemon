@@ -2,16 +2,15 @@
 
 import React from "react";
 import { useState, useEffect } from "react";
-import Card from "../pokeCard/Card";
+import Card from "../pokemonlistCard/Card";
 import axios from "axios";
 
 import "./pokemons.css";
 
-const Pokemons = () => {
+const Pokemons = ({ user }) => {
   const [pokemonList, setPokemonList] = useState([]);
 
   useEffect(() => {
-    console.log("I have been rendersed.");
     axios
       .get("https://pokeapi.co/api/v2/pokemon?offset=100&limit=70")
       .then((response) => {
@@ -29,6 +28,7 @@ const Pokemons = () => {
 
         return (
           <Card
+            user={user}
             key={index + 10}
             imgUrl={imgUrl}
             namesAndUrl={value}

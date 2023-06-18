@@ -21,7 +21,6 @@ const Register = () => {
       ...user,
       [name]: value,
     });
-    console.log(name);
   };
 
   const register = () => {
@@ -42,8 +41,6 @@ const Register = () => {
   return (
     <div className="register-container">
       <div className="register">
-        {console.log("User", user)}
-
         <h1 className="reg">Register</h1>
         <input
           type="text"

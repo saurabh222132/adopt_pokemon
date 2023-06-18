@@ -15,24 +15,28 @@ const port = process.env.port;
 //MongoDB atlas database
 
 mongoose.set("strictQuery", true); // This line is added to remove DeprecationWarning
-//connecting to database
 
+//===================================connecting to database================================
 const main = async () => {
-  await mongoose.connect(
-    `${process.env.base_url}`,
+  try {
+    await mongoose.connect(
+      `${process.env.base_url}`,
 
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    },
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      },
 
-    () => {
-      console.log("DB connected");
-    }
-  );
+      () => {
+        console.log("DB connected");
+      }
+    );
+  } catch (err) {
+    console.log(err);
+  }
 };
 main();
-
+// schema for storing user
 const userSchema = new mongoose.Schema({
   name: String,
   email: String,
@@ -40,6 +44,16 @@ const userSchema = new mongoose.Schema({
 });
 
 const User = new mongoose.model("User", userSchema);
+
+//======================= schema for storing the adopted pokemons-=======================
+
+const dataSchema = new mongoose.Schema({
+  email: String,
+  pokemonid: String,
+  health: Number,
+});
+
+const Data = new mongoose.model("PokemonsList", dataSchema);
 
 //======================= Home route======================
 app.get("/", (req, res) => {
@@ -96,6 +110,35 @@ app.post("/register", async (req, res) => {
     }
   });
 });
+
+//==================================store the pokemon in database ================================
+
+app.post("/storedata", async (req, res) => {
+  console.log(req.body);
+
+  const email = req.body.email;
+  const pokemonid = req.body.id;
+  const health = req.body.health;
+
+  const data = new Data({
+    email,
+    pokemonid,
+    health,
+  });
+  await data.save((err) => {
+    if (err) {
+      res.send({ message: "Something error occured" });
+    } else {
+      res.send({ message: "Data saved successfully!" });
+    }
+  });
+});
+// fetching the stored pokemon from the database and send to the client
+// app.post("/pokemonlist", async (req, res) => {
+//   Data.find({ email: req.body.email }, async (err, result) => {
+//     res.send(result);
+//   });
+// });
 
 app.listen(port, () => {
   console.log(`BE started at port ${port}`);

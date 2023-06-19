@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import * as dotenv from "dotenv";
 import bcrypt from "bcrypt";
+import cron from "node-cron";
 
 dotenv.config();
 
@@ -165,7 +166,20 @@ app.post("/feed", async (req, res) => {
   res.send({ message: "response from server" });
 });
 //======================Scheduling job with node-cron for decreasing health status=======================
-//
+
+let value = 50;
+var task = cron.schedule(`*/${value} * * * * *`, async function () {
+  console.log("running a task every 50 seconds");
+
+  await Data.updateMany(
+    { health: { $gt: 0 } },
+    { $inc: { health: -10 } },
+    async (err, result) => {
+      console.log(result);
+    }
+  );
+  // use node cron here
+});
 
 app.listen(port, () => {
   console.log(`BE started at port ${port}`);

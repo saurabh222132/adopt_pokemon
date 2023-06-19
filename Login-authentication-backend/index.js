@@ -144,18 +144,28 @@ app.post("/storedata", async (req, res) => {
     }
   });
 });
-//=============fetching the stored pokemon from the database and send to the client=======
+//=============fetching the stored pokemon from the database and send to the client==================
 app.post("/pokemonlist", async (req, res) => {
   Data.find({ email: req.body.email }, async (err, result) => {
     res.send(result);
   });
 });
 
-//============check for individual pokemonid=======================
-// app.get("/checkpokemonid", async (req, res) => {
-//   console.log(req.body);
-//   res.send("checkpokemonid request accepted");
-// });
+//=========================================feed Route=========================================
+
+app.post("/feed", async (req, res) => {
+  console.log(req.body);
+  Data.updateOne(
+    { $and: [{ pokemonid: req.body.id }, { health: { $lt: 100 } }] },
+
+    { $inc: { health: 10 } }
+  ).then((err, result) => {
+    console.log(result);
+  });
+  res.send({ message: "response from server" });
+});
+//======================Scheduling job with node-cron for decreasing health status=======================
+//
 
 app.listen(port, () => {
   console.log(`BE started at port ${port}`);

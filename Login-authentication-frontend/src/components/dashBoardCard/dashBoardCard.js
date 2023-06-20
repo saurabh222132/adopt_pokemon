@@ -42,7 +42,7 @@ const DashBoardCard = ({ fetchedData, setdata, index, value }) => {
 
         <p className="my-auto  text-center">{value.name}</p>
 
-        <p className="hp my-auto">
+        <div className="hp my-auto">
           Health Status : {hp}
           <div className="progress">
             <div
@@ -54,7 +54,7 @@ const DashBoardCard = ({ fetchedData, setdata, index, value }) => {
               aria-valuemax={100}
             />
           </div>
-        </p>
+        </div>
 
         <button className="btn btn-primary " onClick={() => handleFeed()}>
           {" "}

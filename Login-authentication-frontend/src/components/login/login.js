@@ -3,13 +3,14 @@ import "./login.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import logo from "../image/logo.png";
+import AppDetails from "./projectDetails/projectdetails";
 
 const Login = ({ setLoginUser }) => {
   let navigate = useNavigate();
 
   const [user, setUser] = useState({
-    name: "",
     email: "",
+    password: "",
   });
 
   const handleChange = (e) => {
@@ -35,7 +36,7 @@ const Login = ({ setLoginUser }) => {
   return (
     <div className="login-main">
       <h1 className="poke">Adopt Pokemons </h1>
-      <div className="login">
+      <div className="login mb-2">
         <h1>Login</h1>
         <img className="logo" src={logo} width="90px" alt="logo"></img>
         <input
@@ -57,10 +58,13 @@ const Login = ({ setLoginUser }) => {
         </div>
         <div>or</div>
         <div className="button" onClick={() => navigate("/register")}>
-          {" "}
-          Register{" "}
+          Register
         </div>
       </div>
+
+      {/* About the project Details */}
+
+      <AppDetails />
     </div>
   );
 };

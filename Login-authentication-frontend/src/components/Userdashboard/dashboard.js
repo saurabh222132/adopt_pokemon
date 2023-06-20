@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import UserModal from "./modal/modal";
 
 import DashBoardCard from "../dashBoardCard/dashBoardCard";
 import "./dashboard.css";
@@ -32,7 +33,7 @@ const Dashboard = ({ user }) => {
         </h1>
         <div className="button text py-4 me-3"></div>
 
-        <div className="button text py-4">
+        <div className="button text py-4 me-3">
           <button
             className="btn  mx-auto d-block btn-primary"
             onClick={() => {
@@ -42,7 +43,11 @@ const Dashboard = ({ user }) => {
             Back
           </button>
         </div>
+        {/*=============== Profile section========== */}
+        <UserModal adoptCount={fetchedData.length} user={user} />
+        {/* End of profile section */}
       </div>
+
       <div className="adopted text-white text-center">Adopted Pokemon List</div>
 
       {fetchedData.length === 0 ? (
@@ -55,6 +60,7 @@ const Dashboard = ({ user }) => {
           return (
             <div className=" ">
               <DashBoardCard
+                key={index + 10}
                 fetchedData={fetchedData}
                 setdata={setfetchedData}
                 index={index + 1}

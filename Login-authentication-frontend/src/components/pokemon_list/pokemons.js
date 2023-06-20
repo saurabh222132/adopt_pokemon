@@ -14,7 +14,6 @@ const Pokemons = ({ user }) => {
     axios
       .get("https://pokeapi.co/api/v2/pokemon?offset=100&limit=70")
       .then((response) => {
-        console.log(response.data.results);
         setPokemonList(response.data.results);
       });
   }, []);

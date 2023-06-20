@@ -19,6 +19,12 @@
   margin-right: 20px;
   padding-top: 13px;
 }
+.card > div.details > .row {
+  font-size: 20px;
+
+  margin-right: 20px;
+  padding-top: 13px;
+}
 .card > div > .pokemonImg {
   display: block;
   margin-left: auto;

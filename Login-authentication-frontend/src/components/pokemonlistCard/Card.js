@@ -2,6 +2,20 @@ import React from "react";
 import "./card.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Row, Col } from "react-bootstrap";
+
+//details function
+
+const Property = ({ head, body }) => {
+  return (
+    <Row className="row p-0 m-0">
+      <Col xs={4} className="heading p-0">
+        <b>{head} </b>
+      </Col>
+      <Col xs={8}>: {body}</Col>
+    </Row>
+  );
+};
 
 const Card = (props) => {
   const [pokemonData, setPokemonData] = useState({});
@@ -38,21 +52,28 @@ const Card = (props) => {
 
   return (
     <div className="card flex-grow-1">
-      <div className=" d-flex  flex-wrap">
+      <div className="d-flex  flex-wrap">
         <p>{props.index + 1}.</p>
         <h1 className="name"> {props.namesAndUrl.name}</h1>
       </div>
       <div>
         <img className="pokemonImg" src={props.imgUrl} alt="pokemonPhoto"></img>
       </div>
-
+      {/* Details of the pokemons */}
       <div className="details">
-        <p>Name: {pokemonData.name}</p>
-        <p>Health Status :{100}</p>
-        <p>Height : {pokemonData.height}</p>
-        <p>Weight : {pokemonData.weight}</p>
-        <p>Id : {pokemonData.id}</p>
-        <p>Type: {type1}</p>
+        {/* <Row className="row p-0 m-0">
+          <Col className="heading p-0">
+            <b>Name</b>
+          </Col>
+          <Col xs={8}>: {pokemonData.name}</Col>
+        </Row> */}
+        <Property head={"Name"} body={pokemonData.name} />
+        <Property head={"Health"} body={100} />
+        <Property head={"Height"} body={pokemonData.height} />
+
+        <Property head={"Weight"} body={pokemonData.weight} />
+        <Property head={"Id"} body={pokemonData.id} />
+        <Property head={"Type"} body={type1} />
       </div>
       {isAdopted ? (
         <button

@@ -92,7 +92,7 @@ app.post("/register", async (req, res) => {
       res.send({ message: "User already regisetered" });
     } else {
       //create hash password
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      const hashedPassword = await bcrypt.hash(password, 10);
 
       //create new user
       const user = new User({
@@ -102,10 +102,11 @@ app.post("/register", async (req, res) => {
       });
       // saving the user
 
-      await user.save((err) => {
+      await user.save((err, result) => {
         if (err) {
           res.send({ message: "err" });
-        } else {
+        }
+        if (result) {
           res.send({ message: "Successfully registered! Please Login now" });
         }
       });
@@ -155,14 +156,11 @@ app.post("/pokemonlist", async (req, res) => {
 //=========================================feed Route (Update Health in Database)=========================================
 
 app.post("/feed", async (req, res) => {
-  console.log(req.body);
   Data.updateOne(
     { $and: [{ pokemonid: req.body.id }, { health: { $lt: 100 } }] },
 
     { $inc: { health: 10 } }
-  ).then((err, result) => {
-    console.log(result);
-  });
+  ).then((err, result) => {});
   res.send({ message: "health increases!" });
 });
 
@@ -181,19 +179,17 @@ app.post("/drop", async (req, res) => {
 
 //======================Scheduling job with node-cron for decreasing health status=======================
 
-// let value = 50;
-// var task = cron.schedule(`*/${value} * * * * *`, async function () {
-//   console.log("running a task every 50 seconds");
+var task = cron.schedule(`* */23 * * *`, async function () {
+  console.log("running a task every 23 hours and decrease health by 10");
 
-//   await Data.updateMany(
-//     { health: { $gt: 0 } },
-//     { $inc: { health: -10 } },
-//     async (err, result) => {
-//       console.log(result);
-//     }
-//   );
-//   // use node cron here
-// });
+  await Data.updateMany(
+    { health: { $gt: 0 } },
+    { $inc: { health: -10 } },
+    async (err, result) => {
+      console.log(result);
+    }
+  );
+});
 
 app.listen(port, () => {
   console.log(`BE started at port ${port}`);

@@ -11,20 +11,18 @@ const Dashboard = ({ user }) => {
   const [fetchedData, setfetchedData] = useState([]);
 
   //fetching stored pokemon in database
-  const fetch = async () => {
-    await axios
-      .post("http://localhost:4000/pokemonlist", { email: user.email })
-      .then((res) => {
-        setfetchedData(res.data);
-        console.log("data fetched from database.");
-      });
-  };
 
   useEffect(() => {
     //fetching stored pokemon in database
-
+    const fetch = async () => {
+      await axios
+        .post("http://localhost:4000/pokemonlist", { email: user.email })
+        .then((res) => {
+          if (res) setfetchedData(res.data);
+        });
+    };
     fetch();
-  }, []);
+  }, [user.email]);
 
   return (
     <div className="dashboard-container">
@@ -45,11 +43,27 @@ const Dashboard = ({ user }) => {
           </button>
         </div>
       </div>
-      <div className="adopted text-white text-center">Adopted Pokemons</div>
+      <div className="adopted text-white text-center">Adopted Pokemon List</div>
 
-      {fetchedData.map((value, index) => {
-        return <DashBoardCard index={index + 1} value={value} />;
-      })}
+      {fetchedData.length === 0 ? (
+        <h5 className="text-white text-center ">
+          <span className="text-warning">Note :</span> You haven't adopt any
+          pokemon, please adopt pokemon first.
+        </h5>
+      ) : (
+        fetchedData.map((value, index) => {
+          return (
+            <div className=" ">
+              <DashBoardCard
+                fetchedData={fetchedData}
+                setdata={setfetchedData}
+                index={index + 1}
+                value={value}
+              />
+            </div>
+          );
+        })
+      )}
     </div>
   );
 };

@@ -4,24 +4,39 @@ import { useState } from "react";
 
 import "./dashBoardCard.css";
 
-const DashBoardCard = ({ index, value }) => {
+const DashBoardCard = ({ fetchedData, setdata, index, value }) => {
   var [hp, sethp] = useState(value.health);
 
+  //============Handle feedclick=================
   const handleFeed = () => {
     const fetch = async () => {
       await axios
         .post("http://localhost:4000/feed", { id: value.pokemonid })
         .then((res) => {
-          console.log("Health status increased ");
           console.log(res.data);
         });
     };
     fetch();
     if (hp < 100) sethp(hp + 10);
   };
+  //============Handle drop================
 
+  const handleDrop = async () => {
+    await axios
+      .post("http://localhost:4000/drop", { pokemonid: value.pokemonid })
+      .then((res) => {
+        console.log(res.data);
+      });
+
+    const myfunc = (object) => {
+      return object.pokemonid !== value.pokemonid;
+    };
+    const newArray = fetchedData.filter(myfunc);
+
+    setdata(newArray);
+  };
   return (
-    <div className="card-container mb-2 ">
+    <div className="card-container mb-2 w-100 ">
       <div className="value d-sm-flex justify-content-evenly  text-center">
         <p className="my-auto">{index}.</p>
 
@@ -41,9 +56,17 @@ const DashBoardCard = ({ index, value }) => {
           </div>
         </p>
 
-        <button className="btn btn-primary" onClick={() => handleFeed()}>
+        <button className="btn btn-primary " onClick={() => handleFeed()}>
           {" "}
           Feed{" "}
+        </button>
+        <button
+          className="btn btn-primary "
+          onClick={() => {
+            handleDrop();
+          }}
+        >
+          Drop Out
         </button>
       </div>
     </div>

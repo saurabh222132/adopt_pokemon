@@ -61,7 +61,7 @@ const Data = new mongoose.model("PokemonsList", dataSchema);
 app.get("/", (req, res) => {
   res.send({ message: "This is the home route" });
 });
-//===================================================Login Route==========================
+//===================================================Login Route (Searching for data in database)==========================
 
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
@@ -82,7 +82,7 @@ app.post("/login", (req, res) => {
   });
 });
 
-//============================== Register route =================================================
+//============================== Register route (inserting Data in database ) =================================================
 app.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -113,7 +113,7 @@ app.post("/register", async (req, res) => {
   });
 });
 
-//==================================store the pokemon in database ================================
+//==================================store the pokemon in database (insert Data in the database) ================================
 
 app.post("/storedata", async (req, res) => {
   const email = req.body.email;
@@ -145,14 +145,14 @@ app.post("/storedata", async (req, res) => {
     }
   });
 });
-//=============fetching the stored pokemon from the database and send to the client==================
+//=============fetching the stored pokemon from the database and send to the client (read Data from the database )==================
 app.post("/pokemonlist", async (req, res) => {
   Data.find({ email: req.body.email }, async (err, result) => {
     res.send(result);
   });
 });
 
-//=========================================feed Route=========================================
+//=========================================feed Route (Update Health in Database)=========================================
 
 app.post("/feed", async (req, res) => {
   console.log(req.body);
@@ -163,23 +163,37 @@ app.post("/feed", async (req, res) => {
   ).then((err, result) => {
     console.log(result);
   });
-  res.send({ message: "response from server" });
+  res.send({ message: "health increases!" });
 });
+
+//============================Drop Route (Delete pokemon from database)================================
+
+app.post("/drop", async (req, res) => {
+  console.log(req.body);
+
+  Data.deleteOne({ pokemonid: req.body.pokemonid }).then((res) => {
+    if (res) {
+      console.log(res);
+    }
+  });
+  res.send({ message: "data Deleted succeffuly from database" });
+});
+
 //======================Scheduling job with node-cron for decreasing health status=======================
 
-let value = 50;
-var task = cron.schedule(`*/${value} * * * * *`, async function () {
-  console.log("running a task every 50 seconds");
+// let value = 50;
+// var task = cron.schedule(`*/${value} * * * * *`, async function () {
+//   console.log("running a task every 50 seconds");
 
-  await Data.updateMany(
-    { health: { $gt: 0 } },
-    { $inc: { health: -10 } },
-    async (err, result) => {
-      console.log(result);
-    }
-  );
-  // use node cron here
-});
+//   await Data.updateMany(
+//     { health: { $gt: 0 } },
+//     { $inc: { health: -10 } },
+//     async (err, result) => {
+//       console.log(result);
+//     }
+//   );
+//   // use node cron here
+// });
 
 app.listen(port, () => {
   console.log(`BE started at port ${port}`);

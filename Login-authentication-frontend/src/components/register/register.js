@@ -3,8 +3,6 @@ import "./register.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-// const base_url = "https://loginauthentication-ftl7.onrender.com";
-
 const Register = () => {
   const navigate = useNavigate();
 
@@ -27,8 +25,8 @@ const Register = () => {
     const { name, email, password, reEnterPassword } = user;
     if (name && email && password && password === reEnterPassword) {
       axios
-        // .post("https://loginauthentication-ftl7.onrender.com/register", user)
-        .post("http://localhost:4000/register", user)
+        // .post("http://localhost:4000/register", user)
+        .post("https://pokemon-adoption-backend.onrender.com/register", user)
         .then((res) => {
           alert(res.data.message);
           navigate("/login");

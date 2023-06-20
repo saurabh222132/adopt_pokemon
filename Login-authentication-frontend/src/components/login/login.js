@@ -23,9 +23,8 @@ const Login = ({ setLoginUser }) => {
 
   const login = () => {
     axios
-
-      // .post("https://loginauthentication-ftl7.onrender.com/login", user)
-      .post("http://localhost:4000/login", user)
+      //.post("http://localhost:4000/login", user)
+      .post("https://pokemon-adoption-backend.onrender.com/login", user)
       .then((res) => {
         alert(res.data.message);
         setLoginUser(res.data.user);

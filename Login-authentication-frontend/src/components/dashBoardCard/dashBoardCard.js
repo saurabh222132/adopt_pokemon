@@ -11,7 +11,9 @@ const DashBoardCard = ({ fetchedData, setdata, index, value }) => {
   const handleFeed = () => {
     const fetch = async () => {
       await axios
-        .post("http://localhost:4000/feed", { id: value.pokemonid })
+        .post("https://pokemon-adoption-backend.onrender.com/feed", {
+          id: value.pokemonid,
+        })
         .then((res) => {
           console.log(res.data);
         });
@@ -23,7 +25,9 @@ const DashBoardCard = ({ fetchedData, setdata, index, value }) => {
 
   const handleDrop = async () => {
     await axios
-      .post("http://localhost:4000/drop", { pokemonid: value.pokemonid })
+      .post("https://pokemon-adoption-backend.onrender.com/drop", {
+        pokemonid: value.pokemonid,
+      })
       .then((res) => {
         console.log(res.data);
       });

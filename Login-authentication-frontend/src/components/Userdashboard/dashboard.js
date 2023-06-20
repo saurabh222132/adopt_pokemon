@@ -17,7 +17,10 @@ const Dashboard = ({ user }) => {
     //fetching stored pokemon in database
     const fetch = async () => {
       await axios
-        .post("http://localhost:4000/pokemonlist", { email: user.email })
+        // .post("http://localhost:4000/pokemonlist", { email: user.email })
+        .post("https://pokemon-adoption-backend.onrender.com/pokemonlist", {
+          email: user.email,
+        })
         .then((res) => {
           if (res) setfetchedData(res.data);
         });

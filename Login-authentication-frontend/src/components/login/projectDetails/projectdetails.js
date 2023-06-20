@@ -47,8 +47,8 @@ function AppDetails() {
             health status.
           </div>
           <div className="d-inline-block ">
-            <b>Step 6.</b> The health of pokemons decreases by 10 after every 2
-            hours. So feed your pokemons to keep it alive.
+            <b>Step 6.</b> The health of pokemons decreases by 10% after every
+            23 hours. So feed your pokemons to keep it alive.
           </div>
           <div className="d-inline-block ">
             <b className="text-danger">Note</b> You can't adopt a pokemon that

@@ -10,4 +10,4 @@ Tech Stack:-
 Backend: Node.js, Express, and MongoDB
 Frontend: React
 
-Demo Link: 
+Demo Link: https://teal-torte-73cb48.netlify.app/

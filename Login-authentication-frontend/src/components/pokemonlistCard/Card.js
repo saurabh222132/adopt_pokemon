@@ -19,19 +19,15 @@ const Property = ({ head, body }) => {
 
 const Card = (props) => {
   const [pokemonData, setPokemonData] = useState({});
-  // const [hp, setHP] = useState(0);
   const [type1, settype1] = useState("");
-
   const [isAdopted, setIsAdopted] = useState(true);
 
   //fetch the details of every pokemon
   useEffect(() => {
     const fetch = async () => {
-      //fetching stored pokemons in database
-
       await axios.get(`${props.namesAndUrl.url}`).then((res) => {
         setPokemonData(res.data);
-        // setHP(res.data.stats[0].base_stat);
+
         settype1(res.data.types[0].type.name);
       });
     };
@@ -40,7 +36,15 @@ const Card = (props) => {
 
   // storing adopted pokemon and their hp and email in database
 
-  const handleAdopt = (data) => {
+  const handleAdopt = () => {
+    const date = new Date().getTime();
+    const data = {
+      name: pokemonData.name,
+      email: props.user.email,
+      id: pokemonData.id,
+      health: 100,
+      feedTime: date,
+    };
     const main = async () => {
       await axios.post("http://localhost:4000/storedata", data).then((res) => {
         alert(res.data.message);
@@ -59,14 +63,9 @@ const Card = (props) => {
       <div>
         <img className="pokemonImg" src={props.imgUrl} alt="pokemonPhoto"></img>
       </div>
+
       {/* Details of the pokemons */}
       <div className="details">
-        {/* <Row className="row p-0 m-0">
-          <Col className="heading p-0">
-            <b>Name</b>
-          </Col>
-          <Col xs={8}>: {pokemonData.name}</Col>
-        </Row> */}
         <Property head={"Name"} body={pokemonData.name} />
         <Property head={"Health"} body={100} />
         <Property head={"Height"} body={pokemonData.height} />
@@ -78,14 +77,7 @@ const Card = (props) => {
       {isAdopted ? (
         <button
           className={`btn btn-primary diabled`}
-          onClick={() =>
-            handleAdopt({
-              name: pokemonData.name,
-              email: props.user.email,
-              id: pokemonData.id,
-              health: 100,
-            })
-          }
+          onClick={() => handleAdopt()}
         >
           Adopt
         </button>

@@ -14,7 +14,6 @@ const Dashboard = ({ user }) => {
   //fetching stored pokemon in database
 
   useEffect(() => {
-    //fetching stored pokemon in database
     const fetch = async () => {
       await axios
         // .post("http://localhost:4000/pokemonlist", { email: user.email })
@@ -46,8 +45,11 @@ const Dashboard = ({ user }) => {
             Back
           </button>
         </div>
+
         {/*=============== Profile section========== */}
+
         <UserModal adoptCount={fetchedData.length} user={user} />
+
         {/* End of profile section */}
       </div>
 

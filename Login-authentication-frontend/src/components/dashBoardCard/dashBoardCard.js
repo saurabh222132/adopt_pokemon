@@ -22,7 +22,7 @@ const DashBoardCard = ({ fetchedData, setdata, index, value }) => {
     if (hp < 100) sethp(hp + 10);
   };
   //============Handle drop================
-
+  //https://pokemon-adoption-backend.onrender.com/drop
   const handleDrop = async () => {
     await axios
       .post("https://pokemon-adoption-backend.onrender.com/drop", {
@@ -60,10 +60,19 @@ const DashBoardCard = ({ fetchedData, setdata, index, value }) => {
           </div>
         </div>
 
-        <button className="btn btn-primary " onClick={() => handleFeed()}>
-          {" "}
-          Feed{" "}
-        </button>
+        {hp !== 100 ? (
+          <button className="btn btn-primary " onClick={() => handleFeed()}>
+            Feed
+          </button>
+        ) : (
+          <button
+            className="btn btn-secondary "
+            onClick={() => handleFeed()}
+            disabled
+          >
+            Full HP
+          </button>
+        )}
         <button
           className="btn btn-primary "
           onClick={() => {

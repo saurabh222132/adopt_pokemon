@@ -53,6 +53,7 @@ const dataSchema = new mongoose.Schema({
   email: String,
   pokemonid: String,
   health: Number,
+  feedTime: Number,
 });
 
 const Data = new mongoose.model("PokemonsList", dataSchema);
@@ -121,6 +122,7 @@ app.post("/storedata", async (req, res) => {
   const pokemonid = req.body.id;
   const health = req.body.health;
   const name = req.body.name;
+  const feedTime = req.body.feedTime;
 
   Data.findOne({ pokemonid: pokemonid }, async (err, result) => {
     if (!result) {
@@ -129,6 +131,7 @@ app.post("/storedata", async (req, res) => {
         email,
         pokemonid,
         health,
+        feedTime,
       });
 
       await data.save((err) => {
@@ -156,20 +159,23 @@ app.post("/pokemonlist", async (req, res) => {
 //=========================================feed Route (Update Health in Database)=========================================
 
 app.post("/feed", async (req, res) => {
-  Data.updateOne(
+  const date = new Date().getTime();
+
+  const update = await Data.updateOne(
     { $and: [{ pokemonid: req.body.id }, { health: { $lt: 100 } }] },
 
-    { $inc: { health: 10 } }
-  ).then((err, result) => {});
-  res.send({ message: "health increases!" });
+    { $inc: { health: 10 }, $set: { feedTime: date } }
+  );
+
+  if (!update.matchedCount) {
+    res.send({ message: "Health is Full!" });
+  } else res.send({ message: "health increases!" });
 });
 
 //============================Drop Route (Delete pokemon from database)================================
 
 app.post("/drop", async (req, res) => {
-  console.log(req.body);
-
-  Data.deleteOne({ pokemonid: req.body.pokemonid }).then((res) => {
+  await Data.deleteOne({ pokemonid: req.body.pokemonid }).then((res) => {
     if (res) {
       console.log(res);
     }
@@ -179,11 +185,12 @@ app.post("/drop", async (req, res) => {
 
 //======================Scheduling job with node-cron for decreasing health status=======================
 
-var task = cron.schedule(`* */23 * * *`, async function () {
-  console.log("running a task every 23 hours and decrease health by 10");
+var task = cron.schedule(`0 0 */24 * * *`, async function () {
+  console.log("running a task every minute and decrease health by 10");
+  const cutoffTime = new Date().getTime() - 86400000; //(times stroed in millisecond in database)  i substract 24 hours from to currect time to get pokemons that is not feeded last 24 hours
 
   await Data.updateMany(
-    { health: { $gt: 0 } },
+    { $and: [{ health: { $gt: 0 } }, { feedTime: { $lt: cutoffTime } }] },
     { $inc: { health: -10 } },
     async (err, result) => {
       console.log(result);

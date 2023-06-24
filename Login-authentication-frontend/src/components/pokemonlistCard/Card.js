@@ -42,7 +42,7 @@ const Card = (props) => {
       name: pokemonData.name,
       email: props.user.email,
       id: pokemonData.id,
-      health: 100,
+      health: 70,
       feedTime: date,
     };
     const main = async () => {

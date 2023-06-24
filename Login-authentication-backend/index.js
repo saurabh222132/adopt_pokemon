@@ -88,7 +88,7 @@ app.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
 
   // check existing user
-  User.findOne({ email: email }, async (err, user) => {
+  const search = await User.findOne({ email: email }, async (err, user) => {
     if (user) {
       res.send({ message: "User already regisetered" });
     } else {
@@ -103,7 +103,7 @@ app.post("/register", async (req, res) => {
       });
       // saving the user
 
-      await user.save((err, result) => {
+      const saveData = await user.save((err, result) => {
         if (err) {
           res.send({ message: "err" });
         }

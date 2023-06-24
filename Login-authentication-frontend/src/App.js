@@ -33,7 +33,13 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
           <Route
             path="/dashboard"
-            element={user && user._id ? <Dashboard user={user} /> : <></>}
+            element={
+              user && user._id ? (
+                <Dashboard user={user} />
+              ) : (
+                <Login setLoginUser={setLoginUser} />
+              )
+            }
           ></Route>
         </Routes>
       </Router>

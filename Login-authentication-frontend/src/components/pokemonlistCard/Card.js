@@ -46,9 +46,11 @@ const Card = (props) => {
       feedTime: date,
     };
     const main = async () => {
-      await axios.post("http://localhost:4000/storedata", data).then((res) => {
-        alert(res.data.message);
-      });
+      await axios
+        .post("https://pokemon-adoption-backend.onrender.com/storedata", data)
+        .then((res) => {
+          alert(res.data.message);
+        });
       setIsAdopted(false);
     };
     main();

@@ -14,7 +14,10 @@ Frontend: React
 
 API used: 
 Poke API for Pokemon data: https://pokeapi.co/
-UNPKG for the image of Pokemons: https://unpkg.com/browse/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/
+UNPKG for the image of Pokemon: https://unpkg.com/browse/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/
 
 Demo Link: https://teal-torte-73cb48.netlify.app/
+
+Note: backend of this app is hosted on render.com with a free web service which makes the server slow after 15-minute inactivity, So the very first request from this app can take a little bit more time than usual to respond from the backend.
+
 API Documentation : https://documenter.getpostman.com/view/25482084/2s93z3g6Ey#4bfef271-5b9b-430e-937b-c7f3714fc597
